@@ -66,7 +66,7 @@ function App() {
 
   }
 
-  return <div className='gameBoard'> <Board xIsNext={xIsNext} squares={currentSquares}
+  return <div className='game-board'> <Board xIsNext={xIsNext} squares={currentSquares}
     onPlay={handlePlay} /></div>
 }
 
