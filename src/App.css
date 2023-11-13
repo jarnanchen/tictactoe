@@ -41,3 +41,20 @@
   color: #888;
 }
 
+
+.game-board {
+  display: flex;
+  gap: 20px;
+  font-weight: 500;
+}
+.game-history {
+  width: 200px;
+  text-align: left;
+  gap: 10px;
+}
+
+.history-item  li {
+  list-style: none;
+  margin-top: 10px;
+  text-align:justify;
+}

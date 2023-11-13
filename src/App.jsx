@@ -9,19 +9,20 @@ function Square({ value, onSquareClick }) {
   return <button className="square" onClick={onSquareClick} >{value}</button>
 }
 
-function Board() {
+function Board({ xIsNext, squares, onPlay }) {
 
-  const [squares, setSquares] = useState(Array(9).fill(null));
-  const [isNext, setNext] = useState(true);
+  // const [squares, setSquares] = useState(Array(9).fill(null));
+  // const [isNext, setNext] = useState(true);
 
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) {
       return;
     }
     const nextSquares = squares.slice();
-    isNext ? nextSquares[i] = "X" : nextSquares[i] = "O";
-    setSquares(nextSquares);
-    setNext(!isNext);
+    xIsNext ? nextSquares[i] = "X" : nextSquares[i] = "O";
+    // setSquares(nextSquares);
+    // setNext(!isNext);
+    onPlay(nextSquares);
   }
 
   const winner = calculateWinner(squares);
@@ -29,7 +30,7 @@ function Board() {
   if (winner) {
     status = "Winner is " + winner;
   } else if (squares.indexOf(null) > -1) {
-    status = "Next Player is " + (isNext ? "X" : "O");
+    status = "Next Player is " + (xIsNext ? "X" : "O");
   } else {
     status = "No winner"
   }
@@ -59,16 +60,29 @@ function Board() {
 
 function App() {
   const [xIsNext, setxNext] = useState(true);
-  const [history, setHistory] = useState(Array(9).fill(null));
+  const [history, setHistory] = useState([Array(9).fill(null)]);
   const currentSquares = history[history.length - 1];
 
-  function handlePlay() {
-
+  function handlePlay(nextSquares) {
+    setHistory([...history, nextSquares]);
+    setxNext(!xIsNext);
   }
 
+  function jumpTo(i) {
+
+    setHistory(history.slice(0, i + 1))
+  }
+
+  const move = history.map((e, i, arr) => <li key={i}>{i + 1}.  <button onClick={() => jumpTo(i)}>{i > 0 ? `go back to step ${i}` : "go back to start"}</button></li>);
+
   return <div className='game-board'> <Board xIsNext={xIsNext} squares={currentSquares}
-    onPlay={handlePlay} /></div>
+    onPlay={handlePlay} />
+    <div className='game-history'>
+      <div className='history-item'>{move}</div>
+    </div>
+  </div>
 }
+
 
 
 
