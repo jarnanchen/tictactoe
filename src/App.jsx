@@ -11,7 +11,7 @@ function Square({ value, onSquareClick }) {
 
 function Board() {
 
-  const [squares, setSquares] = useState(Array(5).fill(null));
+  const [squares, setSquares] = useState(Array(9).fill(null));
   const [isNext, setNext] = useState(true);
 
   function handleClick(i) {
